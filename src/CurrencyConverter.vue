@@ -7,7 +7,7 @@
 
 		<br/><br/>
 
-		<input type="text" v-model="resultValue" />
+		<input type="text" v-model="resultValue" readonly />
 		<select id="currency-to">
 			<option v-for="c in currencies" :key="c.code" :value="c.code">{{ c.name }}</option>
 		</select>
@@ -19,11 +19,12 @@ export default {
 	data() {
 		return {
 			valueToConvert: 0,
+			resultValue: 0,
 			currencies: [
 				{ name: 'Euro', code: 'eur' },
 				{ name: 'US Dollar', code: 'usd' },
 				{ name: 'Yen', code: 'jpy' }
-			].sort(this.compare)
+			].sort(this.compare),
 		}
 	},
 	methods: {
@@ -33,7 +34,7 @@ export default {
 			return 0;
 		},
 		checkInput() {
-			console.log(this.valueToConvert);
+			this.resultValue = this.valueToConvert;
 		},
 	}
 }

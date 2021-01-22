@@ -2,14 +2,14 @@
 	<div id="currency-converter-app">
 		<input type="text" maxlength="9" v-model="valueToConvert" @input="checkInput" />
 		<select id="currency-from">
-			<option v-for="c in currencies" :key="c.code" :value="c.code">{{ c.name }}</option>
+			<option v-for="c in currencies" :key="c.code" :value="c.code">{{ c.name }} {{ c.symbol }}</option>
 		</select>
 
 		<br/><br/>
 
 		<input type="text" v-model="resultValue" readonly />
 		<select id="currency-to">
-			<option v-for="c in currencies" :key="c.code" :value="c.code">{{ c.name }}</option>
+			<option v-for="c in currencies" :key="c.code" :value="c.code">{{ c.name }} {{ c.symbol }}</option>
 		</select>
 	</div>
 </template>
@@ -21,9 +21,9 @@ export default {
 			valueToConvert: 0,
 			resultValue: 0,
 			currencies: [
-				{ name: 'Euro', code: 'eur' },
-				{ name: 'US Dollar', code: 'usd' },
-				{ name: 'Yen', code: 'jpy' }
+				{ name: 'Euro', code: 'eur', symbol: '€' },
+				{ name: 'US Dollar', code: 'usd', symbol: '$' },
+				{ name: 'Yen', code: 'jpy', symbol: '¥' }
 			].sort(this.compare),
 		}
 	},

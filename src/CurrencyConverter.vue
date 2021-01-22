@@ -13,11 +13,15 @@
 		<select v-model="convertTo" @change="checkInput">
 			<option v-for="c in currencies" :key="c.code" :value="c.code">{{ c.name }} {{ c.symbol }}</option>
 		</select>
+
+		<br/><br/>
+
+		<button @click="swapValues">Swap</button>
 	</div>
 </template>
 
 <script>
-const ONLY_NUMBERS_REGEX = /^[0-9]+$/;
+const ONLY_NUMBERS_REGEX = /^[0-9]+(\.[0-9]+)?$/;
 const ERROR_MSG = 'Invalid input, only numbers are allowed';
 
 export default {
@@ -49,10 +53,11 @@ export default {
 		},
 		checkInput() {
 			if (!ONLY_NUMBERS_REGEX.test(this.valueToConvert)) {
-				this.showErrorMessage();
+				this.hasError = true;
 				return;
 			}
 
+			this.hasError = false;
 			this.convert();
 		},
 		convert() {
@@ -61,10 +66,17 @@ export default {
 				return;
 			}
 
-			this.resultValue = this.valueToConvert * this.conversionRates[this.convertFrom][this.convertTo];
+			this.resultValue = (this.valueToConvert * this.conversionRates[this.convertFrom][this.convertTo]).toFixed(2);
 		},
-		showErrorMessage() {
-			this.hasError = true;
+		swapValues() {
+			let auxValue = this.valueToConvert;
+			let auxCurrency = this.convertFrom;
+
+			this.valueToConvert = this.resultValue;
+			this.convertFrom = this.convertTo;
+			
+			this.resultValue = auxValue;
+			this.convertTo = auxCurrency;
 		},
 	},
 	beforeMount() {
